@@ -1,0 +1,7 @@
+# ignore binary files
+*.bin
+*.o
+*.iso
+
+# ignore build files
+isodir
