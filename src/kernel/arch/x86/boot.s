@@ -86,6 +86,15 @@ gdt_udata:
 .byte 0b11001111         # 2nd flags | limit
 .byte 0x0                # base
 
+# TODO: setup the TSS
+gdt_tss:
+.word 0x0                # size of TSS (set later)
+.word 0x0                # address of TSS (set later)
+.byte 0x0                # address of TSS (set later)
+.byte 0b10010001         # 1st flags | type flags
+.byte 0b01000000         # 2nd flags | size of TSS (set later
+.byte 0x0                # address of TSS (set later)
+
 gdt_end:
 
 gdtr:
