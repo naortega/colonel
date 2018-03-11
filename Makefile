@@ -32,7 +32,7 @@ LIBS=-lgcc
 # Binary variables
 OBJS=src/kernel/arch/$(ARCH)/boot.o src/kernel/kernel.o src/kernel/arch/$(ARCH)/tty.o
 
-untrue.bin: $(OBJS)
+colonel.bin: $(OBJS)
 	$(CC) -T src/kernel/arch/$(ARCH)/linker.ld -o $@ $(LDFLAGS) $^ $(LIBS)
 
 %.o: %.c
@@ -42,9 +42,9 @@ untrue.bin: $(OBJS)
 	$(AS) $(AFLAGS) $< -o $@
 
 .PHONY: all build-iso clean clean-all
-all: untrue.bin
+all: colonel.bin
 
-build-iso: untrue.iso
+build-iso: colonel.iso
 
 clean:
 	rm -f $(OBJS)
@@ -53,7 +53,7 @@ clean:
 clean-all: clean
 	rm -f *.iso *.bin
 
-untrue.iso: untrue.bin
+colonel.iso: colonel.bin
 	mkdir -p isodir/boot/grub/
 	cp configs/grub.cfg isodir/boot/grub/
 	cp $< isodir/boot/
