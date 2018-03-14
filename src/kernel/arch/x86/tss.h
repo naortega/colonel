@@ -18,7 +18,7 @@
 
 #pragma once
 
-volatile struct tss {
+struct tss {
 	uint16_t link;
 	uint16_t link_r;    // reserved
 

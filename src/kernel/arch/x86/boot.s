@@ -32,11 +32,26 @@ stack_bottom:
 	resb 16384  ; 16KiB
 stack_top:
 
+section .data
+%include "gdt.s"
+
 section .text
 global _start:function (_start.end - _start)
 _start:
 	; setup the stack
 	mov esp, stack_top
+
+	; TODO: setup GDT, IDT, paging, etc. here
+	cli
+	lgdt [gdtr]
+	jmp 0x08:.reload_segs
+.reload_segs:
+	mov ax, 0x10
+	mov ds, ax
+	mov es, ax
+	mov fs, ax
+	mov gs, ax
+	mov ss, ax
 
 	; call the kernel
 	extern kernel_main

@@ -20,7 +20,7 @@ ARCH=$(shell echo $(TARGET) | sed s/i.86/x86/)
 CROSSFLAGS=--target=$(TARGET)-pc-none-elf -march=$(TARGET)
 # Assembly options
 AS=nasm
-AFLAGS=-felf32
+AFLAGS=-felf32 -Isrc/kernel/arch/$(ARCH)/ -Isrc/
 # C options
 CC=clang
 CFLAGS?=-O0 -g
