@@ -47,10 +47,6 @@ if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "i.86")
 		src/kernel/arch/x86/boot.s
 		${SRCS}
 		src/kernel/arch/x86/tty.c)
-	set_source_files_properties(
-		src/kernel/arch/x86/boot.s
-		PROPERTIES COMPILE_FLAGS ""
-		)
 	set(CMAKE_EXE_LINKER_FLAGS
 		"-T ${CMAKE_CURRENT_SOURCE_DIR}/src/kernel/arch/x86/linker.ld -ffreestanding -nostdlib")
 	include_directories(
