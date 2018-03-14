@@ -15,8 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 cmake_minimum_required(VERSION 2.8)
-project(colonel)
-enable_language(ASM_NASM)
+project(colonel C ASM)
 
 set(TARGET_NAME "colonel.bin")
 
@@ -28,9 +27,11 @@ string(TOLOWER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
 # flags
-set(CMAKE_C_FLAGS "-std=c99 -ffreestanding -fno-builtin -nostdlibinc -Wall -Wextra")
+set(CMAKE_C_FLAGS "-std=c99 -ffreestanding -fno-builtin -Wall -Wextra")
 set(CMAKE_C_FLAGS_DEBUG "-g -O0")
 set(CMAKE_C_FLAGS_RELEASE "-O3")
+set(CMAKE_ASM_FLAGS "")
+set(CMAKE_ASM_FLAGS_RELEASE "")
 
 include_directories(
 	"src/")
@@ -45,14 +46,14 @@ if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "i.86")
 		src/kernel/arch/x86/boot.s
 		${SRCS}
 		src/kernel/arch/x86/tty.c)
-	set(CMAKE_EXE_LINKER_FLAGS "-T src/kernel/arch/x86/linker.ld")
-endif()
-
-if(NOT CMAKE_BUILD_TYPE STREQUAL "debug" AND
-		NOT CMAKE_BUILD_TYPE STREQUAL "relwithdebinfo")
-	add_definitions("-DNDEBUG")
-else()
-	add_definitions("-DDEBUG")
+	set_source_files_properties(
+		src/kernel/arch/x86/boot.s
+		PROPERTIES COMPILE_FLAGS ""
+		)
+	set(CMAKE_EXE_LINKER_FLAGS
+		"-T ${CMAKE_CURRENT_SOURCE_DIR}/src/kernel/arch/x86/linker.ld -ffreestanding -nostdlib")
+	include_directories(
+		"src/kernel/arch/x86/")
 endif()
 
 add_executable(${TARGET_NAME} ${SRCS})
