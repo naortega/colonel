@@ -1,9 +1,8 @@
 ===============
 *** Colonel ***
 ===============
-This is a small OS project I'm working on. It's slow progress and
-probably shouldn't be run anywhere except in an emulator. It currently
-supports the following architectures:
+Colonel (pronounced as it is spelt) is a small hobby kernel project
+that I'm working on. It currently supports the following architectures:
 
  - x86
 
