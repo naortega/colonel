@@ -9,15 +9,10 @@ supports the following architectures:
 # Compiling
 -----------
 You'll want to setup a cross-compilation toolchain with GCC
-(https://gcc.gnu.org/) for your target architecture, along with
-GNU Make (https://www.gnu.org/software/make/) (I'll switch to the
-GNU autotools as soon as I can get them to work properly).
-
-To compile a full image you can run `make build-iso`, which will use
-GNU GRUB (https://www.gnu.org/software/grub/) as the bootloader. Else,
-just run `make` and it will build the kernel into a file called
-`colonel.bin`. You can run the latter with QEMU (https://www.qemu.org/)
-by using the `-kernel` option.
+(https://gcc.gnu.org/) and the GNU Binutils
+(https://www.gnu.org/software/binutils/) for your target architecture,
+as well as the CMake build system (https://cmake.org/). You can test
+the kernel in QEMU (https://www.qemu.org/) using the `-kernel' option.
 
 # License
 ---------
