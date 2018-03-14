@@ -17,17 +17,18 @@
 # General options
 TARGET=i686
 ARCH=$(shell echo $(TARGET) | sed s/i.86/x86/)
+CROSSFLAGS=--target=$(TARGET)-pc-none-elf -march=$(TARGET)
 # Assembly options
-AS=i686-elf-as
-AFLAGS=
+AS=nasm
+AFLAGS=-felf32
 # C options
-CC=i686-elf-gcc
+CC=clang
 CFLAGS?=-O0 -g
-CFLAGS:=$(CFLAGS) -std=gnu99 -ffreestanding -Wall -Wextra -Isrc/
+CFLAGS:=$(CFLAGS) $(CROSSFLAGS) -std=c99 -ffreestanding -fno-builtin -nostdlibinc -Wall -Wextra -Isrc/
 # Linker options
 LDFLAGS?=-O0
-LDFLAGS:=$(LDFLAGS) -ffreestanding -nostdlib
-LIBS=-lgcc
+LDFLAGS:=$(LDFLAGS) $(CROSSFLAGS) -ffreestanding -nostdlib
+LIBS=
 
 # Binary variables
 OBJS=src/kernel/arch/$(ARCH)/boot.o src/kernel/kernel.o src/kernel/arch/$(ARCH)/tty.o
