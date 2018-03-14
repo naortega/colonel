@@ -54,3 +54,12 @@ if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "i.86")
 endif()
 
 add_executable(${TARGET_NAME} ${SRCS})
+
+add_custom_target(build-iso
+	COMMAND mkdir -p isodir/boot/grub/
+	COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/configs/grub.cfg isodir/boot/grub/
+	COMMAND cp ${TARGET_NAME} isodir/boot/
+	COMMAND grub-mkrescue -o colonel.iso isodir
+	DEPENDS ${TARGET_NAME}
+	COMMENT "Building ISO iamge..."
+	SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/configs/grub.cfg)
