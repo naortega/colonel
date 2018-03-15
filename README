@@ -1,20 +1,50 @@
 ===============
 *** Colonel ***
 ===============
-This is a small OS project I'm working on. It's slow progress and
-probably shouldn't be run anywhere except in an emulator. It currently
-supports the following architectures:
+Colonel (pronounced as it is spelt) is a kernel project I'm working on in my
+free time. As a personal project, you really shouldn't run it anywhere but in
+an emulator. Currently the project supports the following architectures:
+
  - x86
+  - i686
 
 # Compiling
 -----------
-You'll want to setup a cross-compilation toolchain with GCC
-(https://gcc.gnu.org/) and the GNU Binutils
-(https://www.gnu.org/software/binutils/) for your target architecture,
-as well as the CMake build system (https://cmake.org/). You can test
-the kernel in QEMU (https://www.qemu.org/) using the `-kernel' option.
+In order to compile this project you will require the following:
+
+ - GCC Cross-Compiler (https://gcc.gnu.org/)
+ - GNU Binutils (https://www.gnu.org/software/binutils/)
+ - CMake (https://cmake.org/)
+
+You may want to compile GCC and Binutils from source for your target
+architecture. You can find the available toolchains for building in the
+`toolchains/' directory. To compile you can run the following commands:
+
+  cd build/
+  cmake -DCMAKE_TOOLCHAIN_FILE=../toolchains/<toolchain_file> ..
+  make
+
+This should create a release build of the project. If you would like debug
+flags then add the `-DCMAKE_BUILD_TYPE=debug' option to the `cmake' command. If
+you would like to build an ISO file then run the `build-iso' make target.
+
+# Testing
+---------
+The safest environment to test this in would be an emulator. The one I use is
+QEMU (https://www.qemu.org/). You can run the ISO image directly under QEMU,
+and the kernel itself (i.e. `colonel.bin') can be run by using the `-kernel'
+option. If you'd like to debug the kernel using QEMU and GDB you can do so by
+running `qemu -S -s -kernel colonel.bin', which will open a server on localhost
+allowing you to connect with GDB for debugging. At this point you can connect
+to the server and load the symbols by running the following in the GDB prompt:
+
+  (gdb) target remote localhost:1234
+  (gdb) symbol-file colonel.bin
+
+From this point on you can use GDB to debug the kernel.
 
 # License
 ---------
-This project is licensed under the terms and conditions of the GNU
-General Public License version 3 or greater (/LICENSE).
+This project is licensed under the terms and conditions of the GNU General
+Public License version 3 or greater (look at `LICENSE' file for more
+information).
