@@ -18,7 +18,10 @@
 
 #include <kernel/tty.h>
 
+#include "globals.h"
+
 void kernel_main() {
 	tty_init();
-	tty_write_s("Colonel");
+	tty_write_s("Colonel v");
+	tty_write_s(VERSION);
 }
