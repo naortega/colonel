@@ -14,10 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.3)
 project(colonel C ASM)
 
 set(TARGET_NAME "colonel.bin")
+set(TARGET_VERSION "0.1")
 
 if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE "release")
@@ -53,13 +54,14 @@ if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "i.86")
 		"src/kernel/arch/x86/")
 endif()
 
-add_executable(${TARGET_NAME} ${SRCS})
+# version pre-processor definition
+add_compile_options($<$<COMPILE_LANGUAGE:C>:-DVERSION="${TARGET_VERSION}">)
 
-add_custom_target(build-iso
-	COMMAND mkdir -p isodir/boot/grub/
-	COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/configs/grub.cfg isodir/boot/grub/
-	COMMAND cp ${TARGET_NAME} isodir/boot/
-	COMMAND grub-mkrescue -o colonel.iso isodir
-	DEPENDS ${TARGET_NAME}
-	COMMENT "Building ISO iamge..."
-	SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/configs/grub.cfg)
+# allow debug info to be printed if necessary
+if(${CMAKE_BUILD_TYPE} STREQUAL "debug")
+	add_compile_options($<$<COMPILE_LANGUAGE:C>:-DDEBUG>)
+else()
+	add_compile_options($<$<COMPILE_LANGUAGE:C>:-DNDEBUG>)
+endif()
+
+add_executable(${TARGET_NAME} ${SRCS})

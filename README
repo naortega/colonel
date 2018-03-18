@@ -25,18 +25,17 @@ architecture. You can find the available toolchains for building in the
   make
 
 This should create a release build of the project. If you would like debug
-flags then add the `-DCMAKE_BUILD_TYPE=debug' option to the `cmake' command. If
-you would like to build an ISO file then run the `build-iso' make target.
+flags then add the `-DCMAKE_BUILD_TYPE=debug' option to the `cmake' command.
 
 # Testing
 ---------
 The safest environment to test this in would be an emulator. The one I use is
-QEMU (https://www.qemu.org/). You can run the ISO image directly under QEMU,
-and the kernel itself (i.e. `colonel.bin') can be run by using the `-kernel'
-option. If you'd like to debug the kernel using QEMU and GDB you can do so by
-running `qemu -S -s -kernel colonel.bin', which will open a server on localhost
-allowing you to connect with GDB for debugging. At this point you can connect
-to the server and load the symbols by running the following in the GDB prompt:
+QEMU (https://www.qemu.org/). You can run the kernel directly (i.e.
+`colonel.bin') by using the `-kernel' option. If you'd like to debug the kernel
+using QEMU and GDB you can do so by running `qemu -S -s -kernel colonel.bin'.,
+which will open a server on `localhost' allowing you to connect with GDB for
+debugging. At this point you can connect to the server and load the symbols by
+running the following in the GDB prompt:
 
   (gdb) target remote localhost:1234
   (gdb) symbol-file colonel.bin
