@@ -32,7 +32,7 @@ set(CMAKE_C_FLAGS "-std=c99 -ffreestanding -fno-builtin -Wall -Wextra")
 set(CMAKE_C_FLAGS_DEBUG "-g -O0")
 set(CMAKE_C_FLAGS_RELEASE "-O3")
 set(CMAKE_ASM_FLAGS "")
-set(CMAKE_ASM_FLAGS_DEBUG "")
+set(CMAKE_ASM_FLAGS_DEBUG "-g")
 set(CMAKE_ASM_FLAGS_RELEASE "")
 
 include_directories(
