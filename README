@@ -32,7 +32,7 @@ flags then add the `-DCMAKE_BUILD_TYPE=debug' option to the `cmake' command.
 The safest environment to test this in would be an emulator. The one I use is
 QEMU (https://www.qemu.org/). You can run the kernel directly (i.e.
 `colonel.bin') by using the `-kernel' option. If you'd like to debug the kernel
-using QEMU and GDB you can do so by running `qemu -S -s -kernel colonel.bin'.,
+using QEMU and GDB you can do so by running `qemu -S -s -kernel colonel.bin',
 which will open a server on `localhost' allowing you to connect with GDB for
 debugging. At this point you can connect to the server and load the symbols by
 running the following in the GDB prompt:
