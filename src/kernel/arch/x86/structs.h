@@ -18,7 +18,16 @@
 
 #pragma once
 
-volatile struct tss {
+struct segdesc {
+	uint16_t limit_low;
+	uint16_t base_low;
+	uint8_t base_middle;
+	uint8_t access;
+	uint8_t gran;
+	uint8_t base_high;
+} __attribute__((packed));
+
+struct tss {
 	uint16_t link;
 	uint16_t link_r;    // reserved
 
@@ -63,5 +72,3 @@ volatile struct tss {
 	uint16_t iopb_r;   // reserved
 	uint16_t iopb;
 } __attribute__((packed));
-
-struct tss tss;
