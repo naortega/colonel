@@ -25,7 +25,7 @@
  * 3/4  - user entries
  * 5    - TSS entry
  */
-#define GDT_SIZE 3
+#define GDT_SIZE 6
 
 struct segdesc gdt[GDT_SIZE];
 struct segreg gdtr;
@@ -51,8 +51,15 @@ void gdt_install() {
 	gdtr.limit = sizeof(gdt)-1;
 
 	gdt_entry_set(&gdt[0], 0, 0, 0, 0);
+	// kernel
 	gdt_entry_set(&gdt[1], 0, 0xFFFFFFFF, 0x9A, 0xCF);
 	gdt_entry_set(&gdt[2], 0, 0xFFFFFFFF, 0x92, 0xCF);
+	// user
+	gdt_entry_set(&gdt[3], 0, 0xFFFFFFFF, 0xFA, 0xCF);
+	gdt_entry_set(&gdt[4], 0, 0xFFFFFFFF, 0xF2, 0xCF);
+	// TSS
+	// TODO: create a proper TSS
+	gdt_entry_set(&gdt[5], 0, 0, 0x91, 0x40);
 
 	gdt_flush(&gdtr);
 }
