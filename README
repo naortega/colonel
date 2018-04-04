@@ -6,6 +6,7 @@ free time. As a personal project, you really shouldn't run it anywhere but in
 an emulator. Currently the project supports the following architectures:
 
  - x86
+  - i386
   - i686
 
 # Compiling
