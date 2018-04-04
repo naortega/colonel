@@ -45,8 +45,8 @@ stack_bottom:
 .skip 16384  # 16 KiB
 stack_top:
 
-.section .data
-.include "gdt.s"
+/*.section .data
+.include "gdt.s"*/
 
 /*
  * The linker script specifies the `_start' label as the entry point to the kernel
@@ -59,19 +59,10 @@ stack_top:
 _start:
 	# set the position of `%esp' to the top of the stack
 	mov $stack_top, %esp
+	mov %esp, %ebp
 
 	# GDT, paging, and other features
-flush_gdt:
-	cli
-	lgdt (gdtr)
-	movw $0x10, %ax
-	movw %ax, %ds
-	movw %ax, %es
-	movw %ax, %fs
-	movw %ax, %gs
-	movw %ax, %ss
-	ljmp $0x08, $flush_end
-flush_end:
+	call gdt_install
 
 boot_kernel:
 	# enter high-level kernel (C)

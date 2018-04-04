@@ -16,22 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.section .text
-.global gdt_flush
-.type gdt_flush, @function
-gdt_flush:
-	pushl %ebp
-	movl %esp, %ebp
-	movl 8(%ebp), %eax
-	cli
-	lgdt (%eax)
-	movw $0x10, %ax
-	movw %ax, %ds
-	movw %ax, %es
-	movw %ax, %fs
-	movw %ax, %gs
-	movw %ax, %ss
-	ljmp $0x0008, $gdt_flush_end
-gdt_flush_end:
-	popl %ebp
-	ret
+#pragma once
+
+#include "structs.h"
+
+extern void gdt_flush(struct segreg *gdtr);
+void gdt_entry_set(struct segdesc *entry, uint32_t base,
+		uint32_t limit, uint8_t access, uint8_t gran);
+void gdt_install();
