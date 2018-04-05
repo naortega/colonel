@@ -58,9 +58,16 @@ void gdt_install() {
 	// user
 	gdt_entry_set(&gdt[3], 0, 0xFFFFFFFF, 0xFA, 0xCF);
 	gdt_entry_set(&gdt[4], 0, 0xFFFFFFFF, 0xF2, 0xCF);
+
 	// TSS
+	tss.ss0 = 0x10;
+	// TODO: set esp0 for system interrupts
+	tss.iopb = sizeof(tss);
 	gdt_entry_set(&gdt[5], (uint32_t)&tss,
 			sizeof(tss), 0x89, 0x40);
 
 	gdt_flush(&gdtr);
+
+	// load the TSS
+	tss_load();
 }
