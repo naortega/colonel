@@ -35,13 +35,3 @@ gdt_flush:
 gdt_flush_end:
 	popl %ebp
 	ret
-
-.global tss_load
-.type tss_load,@function
-tss_load:
-	pushl %ebp
-	movl %esp, %ebp
-	movw $0x28, %ax
-	ltr %ax
-	popl %ebp
-	ret

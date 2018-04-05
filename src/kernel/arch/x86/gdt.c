@@ -67,7 +67,4 @@ void gdt_install() {
 			sizeof(tss), 0x89, 0x40);
 
 	gdt_flush(&gdtr);
-
-	// load the TSS
-	tss_load();
 }

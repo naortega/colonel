@@ -63,6 +63,9 @@ _start:
 
 	# GDT, paging, and other features
 	call gdt_install
+	# load the TSS which is in the 6th entry of the GDT
+	movw $0x28, %ax
+	ltr %ax
 
 boot_kernel:
 	# enter high-level kernel (C)

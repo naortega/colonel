@@ -21,7 +21,6 @@
 #include "structs.h"
 
 extern void gdt_flush(struct segreg *gdtr);
-extern void tss_load();
 void gdt_entry_set(struct segdesc *entry, uint32_t base,
 		uint32_t limit, uint8_t access, uint8_t gran);
 void gdt_install();
