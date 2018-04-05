@@ -28,6 +28,7 @@
 #define GDT_SIZE 6
 
 struct segdesc gdt[GDT_SIZE];
+struct tss tss;
 struct segreg gdtr;
 
 void gdt_entry_set(struct segdesc *entry, uint32_t base,
@@ -58,8 +59,8 @@ void gdt_install() {
 	gdt_entry_set(&gdt[3], 0, 0xFFFFFFFF, 0xFA, 0xCF);
 	gdt_entry_set(&gdt[4], 0, 0xFFFFFFFF, 0xF2, 0xCF);
 	// TSS
-	// TODO: create a proper TSS
-	gdt_entry_set(&gdt[5], 0, 0, 0x91, 0x40);
+	gdt_entry_set(&gdt[5], (uint32_t)&tss,
+			sizeof(tss), 0x89, 0x40);
 
 	gdt_flush(&gdtr);
 }
