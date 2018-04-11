@@ -49,6 +49,7 @@ if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "i.86")
 		${SRCS}
 		src/kernel/arch/x86/gdt.s
 		src/kernel/arch/x86/gdt.c
+		src/kernel/arch/x86/paging.c
 		src/kernel/arch/x86/tty.c)
 	set(CMAKE_EXE_LINKER_FLAGS
 		"-T ${CMAKE_CURRENT_SOURCE_DIR}/src/kernel/arch/x86/linker.ld -ffreestanding -nostdlib")

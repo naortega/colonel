@@ -67,6 +67,15 @@ _start:
 	movw $0x28, %ax
 	ltr %ax
 
+	# paging
+	call setup_paging  # will return pointer to page directory
+	# load page directory
+	movl %eax, %cr3
+	# enable the paging
+	movl %cr0, %eax
+	orl $0x80000000, %eax
+	movl %eax, %cr0
+
 boot_kernel:
 	# enter high-level kernel (C)
 	call kernel_main
