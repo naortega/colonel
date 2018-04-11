@@ -35,6 +35,14 @@ set(CMAKE_ASM_FLAGS "")
 set(CMAKE_ASM_FLAGS_DEBUG "-g")
 set(CMAKE_ASM_FLAGS_RELEASE "")
 
+set(CMAKE_EXE_LINKER_FLAGS "-ffreestanding -nostdlib")
+
+# perform data type checks
+include(CheckTypeSize)
+check_type_size("uint32_t" UINT32_T)
+check_type_size("uint16_t" UINT16_T)
+check_type_size("uint8_t" UINT8_T)
+
 include_directories(
 	"src/")
 
@@ -52,7 +60,7 @@ if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "i.86")
 		src/kernel/arch/x86/paging.c
 		src/kernel/arch/x86/tty.c)
 	set(CMAKE_EXE_LINKER_FLAGS
-		"-T ${CMAKE_CURRENT_SOURCE_DIR}/src/kernel/arch/x86/linker.ld -ffreestanding -nostdlib")
+		"-T ${CMAKE_CURRENT_SOURCE_DIR}/src/kernel/arch/x86/linker.ld ${CMAKE_EXE_LINKER_FLAGS}")
 	include_directories(
 		"src/kernel/arch/x86/")
 endif()
