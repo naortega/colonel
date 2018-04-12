@@ -39,6 +39,9 @@ set(CMAKE_EXE_LINKER_FLAGS "-ffreestanding -nostdlib")
 
 # perform data type checks
 include(CheckTypeSize)
+if(64BIT)
+	check_type_size("uint64_t" UINT64_T)
+endif()
 check_type_size("uint32_t" UINT32_T)
 check_type_size("uint16_t" UINT16_T)
 check_type_size("uint8_t" UINT8_T)
