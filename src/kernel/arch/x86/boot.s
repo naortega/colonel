@@ -61,12 +61,6 @@ _start:
 	mov $stack_top, %esp
 	mov %esp, %ebp
 
-	# GDT, paging, and other features
-	call gdt_install
-	# load the TSS which is in the 6th entry of the GDT
-	movw $0x28, %ax
-	ltr %ax
-
 	# paging
 	call setup_paging  # will return pointer to page directory
 	# load page directory
@@ -75,6 +69,12 @@ _start:
 	movl %cr0, %eax
 	orl $0x80000000, %eax
 	movl %eax, %cr0
+
+	# GDT, paging, and other features
+	call gdt_install
+	# load the TSS which is in the 6th entry of the GDT
+	movw $0x28, %ax
+	ltr %ax
 
 boot_kernel:
 	# enter high-level kernel (C)
